@@ -26,8 +26,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # Setup job
-  setup:
+  # Build job
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -71,22 +71,10 @@ jobs:
             ${{ runner.os }}-nuxt-build-
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
-
-  # Test job
-  test:
-    runs-on: ubuntu-latest
-    needs: setup
-    steps:
       - name: Run linter 👀
         run: ${{ steps.detect-package-manager.outputs.manager }} run lint
       - name: Run tests 🧪
         run: ${{ steps.detect-package-manager.outputs.manager }} run test
-
-  # Build job
-  build:
-    runs-on: ubuntu-latest
-    needs: test
-    steps:
       - name: Application build with Nuxt
         run: ${{ steps.detect-package-manager.outputs.manager }} run build
       - name: Static HTML export with Nuxt
