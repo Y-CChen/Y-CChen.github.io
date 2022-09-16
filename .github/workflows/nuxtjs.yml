@@ -7,7 +7,9 @@ name: Deploy Nuxt site to Pages
 on:
   # Runs on pushes targeting the default branch
   push:
-    branches: ["main"]
+    branches: ['main']
+  pull_request:
+    branches: ['main']
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -20,12 +22,12 @@ permissions:
 
 # Allow one concurrent deployment
 concurrency:
-  group: "pages"
+  group: 'pages'
   cancel-in-progress: true
 
 jobs:
-  # Build job
-  build:
+  # Setup job
+  setup:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -48,7 +50,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: "16"
+          node-version: '16'
           cache: ${{ steps.detect-package-manager.outputs.manager }}
       - name: Setup Pages
         uses: actions/configure-pages@v2
@@ -69,6 +71,24 @@ jobs:
             ${{ runner.os }}-nuxt-build-
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
+
+  # Test job
+  test:
+    runs-on: ubuntu-latest
+    needs: setup
+    steps:
+      - name: Run linter 👀
+        run: ${{ steps.detect-package-manager.outputs.manager }} run lint
+      - name: Run tests 🧪
+        run: ${{ steps.detect-package-manager.outputs.manager }} run test
+
+  # Build job
+  build:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Application build with Nuxt
+        run: ${{ steps.detect-package-manager.outputs.manager }} run build
       - name: Static HTML export with Nuxt
         run: ${{ steps.detect-package-manager.outputs.manager }} run generate
       - name: Upload artifact
