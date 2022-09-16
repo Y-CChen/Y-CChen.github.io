@@ -1,3 +1,8 @@
+const colors = {
+  primary: '#9079b6',
+  secondary: '#67b5b7',
+};
+
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
@@ -17,7 +22,7 @@ export default {
       { hid: 'description', name: 'description', content: '' },
       { name: 'format-detection', content: 'telephone=no' },
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    link: [{ rel: 'icon', type: 'image/svg', href: '/logo.svg' }],
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
@@ -54,6 +59,26 @@ export default {
   // Content module configuration: https://go.nuxtjs.dev/config-content
   content: {},
 
+  tailwindcss: {
+    config: {
+      theme: {
+        colors,
+      },
+    },
+  },
+
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
-}
+  build: {
+    templates: [
+      // logo
+      {
+        src: './logo.svg',
+        dst: '../static/logo.svg',
+        options: {
+          color: colors.primary,
+          strokeWidth: '22px',
+        },
+      },
+    ],
+  },
+};
