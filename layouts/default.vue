@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <div>
+  <div class="flex flex-col min-h-screen">
     <header
       class="sticky top-0 z-50 bg-white inset-x-0 border-b-2 border-gray-100"
     >
@@ -54,6 +54,15 @@
     <div>
       <nuxt />
     </div>
+    <footer class="mt-auto z-50 bg-white inset-x-0 border-t-2 border-gray-100">
+      <div
+        class="capitalize flex items-center max-w-screen-xl h-16 px-4 mx-auto gap-8 desktop:h-24 desktop:px-8"
+      >
+        <span class="mx-auto text-secondary">
+          &copy; {{ new Date().getFullYear() }} Y-CChen. all rights reserved.
+        </span>
+      </div>
+    </footer>
   </div>
 </template>
 
