@@ -15,44 +15,41 @@
             color="bg-primary"
           />
         </nuxt-link>
-        <nav
-          v-if="$breakpoint.desktop"
-          class="block"
-          aria-labelledby="header-navigation"
-        >
-          <h2 id="header-navigation" class="sr-only">header navigation</h2>
-          <ul class="flex items-center text-sm gap-6">
-            <li v-for="(navItem, navItemIndex) in navItems" :key="navItemIndex">
-              <nuxt-link
-                class="text-gray-500 transition hover:text-gray-500/75"
-                :to="navItem.to"
-              >
-                {{ navItem.text }}
-              </nuxt-link>
-            </li>
-          </ul>
-        </nav>
+        <header-navigation v-if="$breakpoint.desktop" :items="navItems" />
         <button
           v-else
-          class="block ml-auto p-2.5 text-gray-600 transition bg-gray-100 rounded hover:text-gray-600/75"
+          class="block ml-auto p-2.5 text-primary transition hover:text-primary/75 bg-gray-100 rounded"
+          @click.stop="mobileNavVisible = !mobileNavVisible"
         >
           <span class="sr-only">toggle menu</span>
           <svg
+            v-if="mobileNavVisible"
             xmlns="http://www.w3.org/2000/svg"
-            class="w-5 h-5"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            stroke-width="2"
+            class="w-5 h-5 fill-transparent stroke-current stroke-2"
+            viewBox="0 0 50 50"
           >
             <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M4 6h16M4 12h16M4 18h16"
+              d="M 7.71875 6.28125 L 6.28125 7.71875 L 23.5625 25 L 6.28125 42.28125 L 7.71875 43.71875 L 25 26.4375 L 42.28125 43.71875 L 43.71875 42.28125 L 26.4375 25 L 43.71875 7.71875 L 42.28125 6.28125 L 25 23.5625 Z"
+            />
+          </svg>
+          <svg
+            v-else
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-5 h-5 fill-transparent stroke-current stroke-2"
+            viewBox="0 0 50 50"
+          >
+            <path
+              d="M 0 9 L 0 11 L 50 11 L 50 9 Z M 0 24 L 0 26 L 50 26 L 50 24 Z M 0 39 L 0 41 L 50 41 L 50 39 Z"
             />
           </svg>
         </button>
       </div>
+      <header-navigation
+        v-show="!$breakpoint.desktop && mobileNavVisible"
+        :items="navItems"
+        vertical
+        @click.stop="mobileNavVisible = false"
+      />
     </header>
     <div>
       <nuxt />
@@ -63,6 +60,9 @@
 <script lang="ts">
 import Vue from 'vue';
 export default Vue.extend({
+  data() {
+    return { mobileNavVisible: false };
+  },
   computed: {
     navItems: {
       get(): { text: string; to: string }[] {
