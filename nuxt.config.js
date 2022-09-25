@@ -1,9 +1,8 @@
-const colors = {
-  primary: '#9079b6',
-  secondary: '#67b5b7',
-};
+import tailwindConfig from './tailwind.config';
 
 export default {
+  telemetry: false,
+
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
 
@@ -29,7 +28,7 @@ export default {
   css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
+  plugins: [{ src: './plugins/breakpoint.ts' }],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -59,13 +58,7 @@ export default {
   // Content module configuration: https://go.nuxtjs.dev/config-content
   content: {},
 
-  tailwindcss: {
-    config: {
-      theme: {
-        colors,
-      },
-    },
-  },
+  tailwindcss: {},
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
@@ -75,7 +68,7 @@ export default {
         src: './logo.svg',
         dst: '../static/logo.svg',
         options: {
-          color: colors.primary,
+          color: tailwindConfig.theme.extend.colors.primary,
           strokeWidth: '22px',
         },
       },
