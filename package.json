@@ -23,9 +23,9 @@
     "@nuxtjs/axios": "^5.13.6",
     "core-js": "^3.25.5",
     "nuxt": "^2.15.8",
-    "vue": "^2.7.11",
+    "vue": "^2.7.12",
     "vue-server-renderer": "^2.7.11",
-    "vue-template-compiler": "^2.7.11",
+    "vue-template-compiler": "^2.7.12",
     "webpack": "^4.46.0"
   },
   "devDependencies": {
