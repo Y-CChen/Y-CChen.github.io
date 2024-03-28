@@ -1,6 +1,5 @@
 {
-  "cSpell.words": ["lintfix", "tailwindcss", "vuex", "y-cchen"],
-  "eslint.packageManager": "yarn",
+  "cSpell.words": ["y-cchen"],
   "i18n-ally.displayLanguage": "zh-TW",
   "i18n-ally.keystyle": "flat",
   "i18n-ally.localesPaths": "locales",
